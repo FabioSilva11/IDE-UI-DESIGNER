@@ -1,1 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto"> 
+
+    <item 
+        android:id="@+id/menu1" 
+        android:title="Exportar"
+        app:showAsAction="never" /> 
+
+    <item 
+        android:id="@+id/menu2" 
+        android:title="Publicar"
+        app:showAsAction="never" /> 
+
+    <item 
+        android:id="@+id/submenu" 
+        android:title="Mais" 
+        app:showAsAction="never"> 
+
+        <menu> 
+
+            <item 
+                android:id="@+id/smenu1" 
+                android:title="Telegram" 
+                app:showAsAction="never" /> 
+
+            <item 
+                android:id="@+id/smenu2" 
+                android:title="Youtube" 
+                app:showAsAction="never" /> 
+
+        </menu> 
+
+    </item> 
+
+</menu> 
+
 
