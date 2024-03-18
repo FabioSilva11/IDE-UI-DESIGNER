@@ -1,20 +1,16 @@
 package com.project.incrysy;
 
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.project.incrysy.ui.main.SectionsPagerAdapter;
 import com.project.incrysy.databinding.ActivityMainBinding;
+import com.project.incrysy.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
 
+        FloatingActionButton fab = binding.fab;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
