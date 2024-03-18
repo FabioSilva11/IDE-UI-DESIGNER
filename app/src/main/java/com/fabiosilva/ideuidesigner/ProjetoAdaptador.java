@@ -9,79 +9,87 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.SparseArray;
 
 public class ProjetoAdaptador extends RecyclerView.Adapter<ProjetoAdaptador.MyHolder> {
 
-    RecyclerTouchListener listener;
-    /**Interface for OnClickListener of RecyclerView**/
     public interface RecyclerTouchListener {
         void onClickItem(View v, int position);
     }
 
-    Context context;
-    LayoutInflater inflater;
-    ArrayList<Projeto> model;
+    private SparseArray<Projeto> model;
+    private RecyclerTouchListener listener;
 
-    public ProjetoAdaptador(Context context, ArrayList<Projeto> model) {
-        inflater = LayoutInflater.from(context);
-        this.context = context;
+    public ProjetoAdaptador(SparseArray<Projeto> model) {
         this.model = model;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        // Add code here to return a different view type for different layouts
+        return 0;
+    }
+
+    @Override
     public int getItemCount() {
         return model.size();
     }
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R.layout.list, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list, parent, false);
         return new MyHolder(v);
     }
 
     @Override
     public void onBindViewHolder(MyHolder holder, final int position) {
-        /**Bind Text in the TextView**/
-        holder.version.setText(model.get(position).getVersion());
-        holder.name.setText(model.get(position).getName());
-        holder.release.setText(model.get(position).getRelease());
-        holder.data.setText(model.get(position).getData());
+        Projeto projeto = model.get(position);
+        holder.bind(projeto);
     }
 
     public void setClickListener(RecyclerTouchListener listener) {
         this.listener = listener;
     }
 
-    /**Holder Class for Row Items**/
-    public class MyHolder extends RecyclerView.ViewHolder {
-        TextView version;
-        TextView name;
-        TextView release;
-        TextView data;
+    public SparseArray<Projeto> getModel() {
+        return model;
+    }
 
-        public MyHolder(final View view) {
+    public static class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final TextView version;
+        private final TextView name;
+        private final TextView release;
+        private final TextView data;
+
+        public MyHolder(View view) {
             super(view);
+            version = view.findViewById(R.id.version);
+            name = view.findViewById(R.id.androidName);
+            release = view.findViewById(R.id.release);
+            data = view.findViewById(R.id.data);
+            view.setOnClickListener(this);
+            setTextColors();
+        }
 
-            version = (TextView) view.findViewById(R.id.version);
-            name = (TextView) view.findViewById(R.id.androidName);
-            release = (TextView) view.findViewById(R.id.release);
-            data = (TextView) view.findViewById(R.id.data);
+        public void bind(Projeto projeto) {
+            version.setText(projeto.getVersion());
+            name.setText(projeto.getName());
+            release.setText(projeto.getRelease());
+            data.setText(projeto.getData());
+        }
 
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onClickItem(v, getAdapterPosition());
+            }
+        }
+
+        private void setTextColors() {
             version.setTextColor(Color.parseColor("#181830"));
             name.setTextColor(Color.parseColor("#181830"));
             release.setTextColor(Color.parseColor("#181830"));
             data.setTextColor(Color.parseColor("#181830"));
-            view.setTag(view);
-
-
-
-            /**OnClick Listener on Row Items**/
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) listener.onClickItem(view, getAdapterPosition());
-                }
-            });
         }
     }
 }
